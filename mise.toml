@@ -15,6 +15,9 @@
 go = "1.27.1"
 node = "26"
 
+# AI-slop gate, pinned so CI resolves no version at run time (C7.2).
+"npm:aislop" = "0.16.1"
+
 # Linters
 "aqua:grafana/flint" = "0.22.14"
 golangci-lint = "2.14.0"
