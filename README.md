@@ -15,7 +15,7 @@ The service exposes item CRUD over HTTP behind a layered architecture. A Gin han
 
 ```bash
 just install
-just verify
+just check
 ```
 
 ## Commands
@@ -23,12 +23,15 @@ just verify
 | Command | Does |
 | --- | --- |
 | `just install` | Installs the pinned tools with `mise`. |
+| `just fmt-check` | Fails when a Go source is not `gofmt`-formatted. |
 | `just lint` | Runs the linters. |
 | `just test` | Runs the Go test suite. |
 | `just coverage` | Runs the tests and writes `coverage/lcov.info`. |
 | `just spec` | Regenerates `docs/openapi.json` from the handler annotations. |
 | `just serve` | Serves the API on port 3000. |
-| `just verify` | Lints and tests. |
+| `just check` | Runs everything CI requires: format, lint, tests, and the API document diff. |
+| `just hooks` | Installs the `pre-push` guard that refuses a push to `main`. |
+| `just agent-files` | Checks the skill tree and its Claude Code links. |
 
 ## Documentation
 
