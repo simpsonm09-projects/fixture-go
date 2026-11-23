@@ -11,6 +11,14 @@ default:
 install:
     mise install
 
+# Format the Go sources with gofmt.
+fmt:
+    mise exec -- golangci-lint fmt
+
+# Fail when a Go source is not gofmt-formatted.
+fmt-check:
+    mise exec -- golangci-lint fmt --diff
+
 # Run every linter over the tracked files.
 lint:
     mise exec -- flint run --full
@@ -35,12 +43,28 @@ coverage:
 spec:
     mise run spec
 
+# Fail when the generated API document differs from the code.
+spec-check:
+    just spec
+    git diff --exit-code -- docs/openapi.json
+
 # Build and serve the API on http://127.0.0.1:3000.
 serve:
     mise run serve
 
-# Lint and test.
-verify: lint test
+# Everything CI requires.
+check: fmt-check lint test spec-check
+
+# Historical alias for `check`, kept for the support template.
+verify: check
+
+# Install the guarded git hook.
+hooks:
+    git config --local core.hooksPath .githooks
+
+# Check the .agents/skills tree and its .claude/skills links.
+agent-files:
+    mise exec -- node scripts/agent-files.mjs
 
 # Prune remote-tracking refs and delete local branches merged into main.
 prune:
